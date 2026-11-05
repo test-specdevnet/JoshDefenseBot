@@ -20,8 +20,16 @@ Company-specific factual claims require evidence. Stable general education is al
 
 ## Privacy and interaction
 
-Chat exists in tab memory; recent conversation is sent to Cloudflare Workers AI. If enabled, short context-derived search queries also go to Google News RSS and, when needed, GDELT; avoid sensitive input. No app database stores conversations. Platform logs may retain metadata. Same-origin requests, bounded messages, rate limits, plain-text answer rendering and restrictive asset headers protect the surface. Public access has no account system or global spend cap.
+Conversations are stored in browser localStorage under josh-conversations-v1. Up to 50 conversations, each up to 60 messages, retain messages, source links and drafts. The oldest conversation is removed when the 50-chat cap is reached. New chats have separate memory. Reopening restores the saved conversation; up to 48,000 characters of its most recent context are sent to Cloudflare Workers AI. Long chats may exceed model recall; this is not unlimited memory. If enabled, short context-derived search queries also go to Google News RSS and, when needed, GDELT; avoid sensitive input. No app database stores conversations. Platform logs may retain metadata. Same-origin requests, bounded messages, rate limits, plain-text answer rendering and restrictive asset headers protect the surface. Public access has no account system or global spend cap.
 
 Animation respects reduced-motion preferences and can be disabled. Response text is progressively revealed after receipt, not streamed from the model. Expressions are selected from interpreted intent and tone; they do not mean the mascot has emotions or universal human understanding.
 
 Independent learning tool; not affiliated with General Dynamics. User-supplied and generated Josh artwork are project assets. Original GD trademarks and linked source content remain with their owners. Conversation-design references and artwork prompt are in knowledge/conversation-design.md.
+
+## Cursor tracking and local history
+
+A transparent nine-direction gaze sheet follows mouse/pen pointer movement with damped head rotation. Gaze pauses during emotes and resets when the pointer leaves, the page loses focus, or animation is disabled. Touch input does not trigger hover tracking. Reduced-motion settings disable tracking.
+
+The history button opens saved conversations. New conversation also opens history so previous chats remain easy to find. History is browser/device-local, not synced to accounts or the server. Clearing site data removes it. Storage failures display a warning; corrupt archives are not overwritten. Per-chat deletion is available in the history panel. A previously open conversation from before this update cannot be recovered after refresh unless it was saved.
+
+Gaze artwork: built-in image generator, existing Josh sprite as identity reference. Prompt: transparent registered 3x3 waist-up Josh gaze directions (upper-left/up/upper-right, left/center/right, lower-left/down/lower-right), head and pupils turn subtly, torso and identity preserved. A second edit removed residual background. Saved asset: public/josh-gaze.png.

@@ -426,3 +426,97 @@ h2 {
   margin-top: 10px;
   line-height: 1.6;
 }
+.gaze-pivot {
+  width: 100%;
+  height: 100%;
+  transform: perspective(500px) rotateX(var(--look-x, 0deg))
+    rotateY(var(--look-y, 0deg));
+  transition: transform 0.18s ease-out;
+}
+#josh[data-gaze][data-expression="idle"] .sprite,
+#josh[data-gaze][data-expression="smile"] .sprite {
+  background-image: url("/josh-gaze.png");
+  background-size: 300% 300%;
+  background-position: var(--gaze-x, 50%) var(--gaze-y, 50%);
+}
+.motion-off .gaze-pivot {
+  transform: none !important;
+  transition: none;
+}
+#chat-title {
+  display: inline-block;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+#history-dialog {
+  max-width: 600px;
+}
+#history-dialog p {
+  font-size: 11px;
+  color: #a7b19f;
+}
+#history-dialog .start-chat {
+  float: none;
+  background: #d6e599;
+  color: #27321d;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  margin: 8px 0 18px;
+}
+.history-row {
+  display: flex;
+  border-top: 1px solid #394234;
+  gap: 10px;
+  align-items: center;
+}
+.history-row button {
+  float: none;
+  font-size: 13px;
+  padding: 14px 0;
+  text-align: left;
+}
+.history-row .open-chat {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.open-chat small {
+  display: block;
+  font-size: 10px;
+  color: #a7b19f;
+  margin-top: 5px;
+}
+.open-chat[aria-current="true"] {
+  color: #d6e599;
+}
+.history-row .delete-chat {
+  font-size: 10px;
+  color: #c3bba9;
+}
+#chat-list {
+  max-height: 50vh;
+  overflow: auto;
+}
+@media (max-width: 600px) {
+  #chat-title {
+    max-width: 85px;
+    font-size: 9px;
+  }
+  .tools #motion {
+    font-size: 9px;
+    padding: 0 4px;
+  }
+  .tools button {
+    width: 28px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gaze-pivot {
+    transform: none !important;
+    transition: none;
+  }
+}

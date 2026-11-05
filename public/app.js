@@ -1,3 +1,5 @@
+import { initHistory } from "./conversations.js";
+import { initGaze } from "./gaze.js";
 let history = [],
   busy = false,
   animationEnabled = !matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -5,6 +7,7 @@ const $ = (s) => document.querySelector(s),
   messages = $("#messages"),
   input = $("#message"),
   josh = $("#josh");
+let resetGaze = () => {};
 let expressionTimer,
   replyExpression = "smile",
   lastInputEmote = 0;
@@ -36,9 +39,11 @@ function syncMotion() {
   $("#motion").setAttribute("aria-pressed", String(animationEnabled));
   if (!animationEnabled) {
     clearTimeout(expressionTimer);
+    resetGaze();
     josh.dataset.expression = "idle";
   }
 }
+resetGaze = initGaze(josh, () => animationEnabled);
 syncMotion();
 $("#motion").addEventListener("click", () => {
   animationEnabled = !animationEnabled;
@@ -122,6 +127,7 @@ async function add(role, content, sources = [], reveal = false) {
   scrollChat();
 }
 async function send(text) {
+  await conversations.ready;
   if (busy || !text.trim()) return;
   if (history.length >= 60) {
     $("#notice").textContent =
@@ -131,11 +137,13 @@ async function send(text) {
   busy = true;
   $("#send").disabled = true;
   $("#new-chat").disabled = true;
+  $("#history").disabled = true;
   input.disabled = true;
   $("#welcome")?.remove();
   await add("user", text);
   history.push({ role: "user", content: text });
   input.value = "";
+  conversations.save(history);
   input.style.height = "";
   $("#notice").textContent = "";
   $("#josh-status").textContent = "Thinking it through…";
@@ -149,7 +157,10 @@ async function send(text) {
     const response = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: history.slice(-20), mode: "chat" }),
+      body: JSON.stringify({
+        messages: conversations.context(history),
+        mode: "chat",
+      }),
       signal: AbortSignal.timeout(60000),
     });
     const data = await response.json();
@@ -182,12 +193,19 @@ async function send(text) {
           : "Live research unavailable or returned no evidence; using reviewed sources and conditional analysis.";
       messages.lastElementChild.append(note);
     }
-    history.push({ role: "assistant", content: data.answer });
+    history.push({
+      role: "assistant",
+      content: data.answer,
+      sources: data.sources,
+      research: data.research,
+    });
+    conversations.save(history);
     emote(replyExpression, 1800);
     $("#josh-status").textContent = "Listening.";
   } catch (e) {
     history.pop();
     input.value = text;
+    conversations.save(history);
     $("#notice").textContent =
       e.name === "TimeoutError"
         ? "That took too long. Your message is ready to retry."
@@ -199,6 +217,7 @@ async function send(text) {
     busy = false;
     $("#send").disabled = false;
     $("#new-chat").disabled = false;
+    $("#history").disabled = false;
     input.disabled = false;
     input.focus();
   }
@@ -221,25 +240,21 @@ input.addEventListener("input", () => {
   input.style.height = "auto";
   input.style.height = Math.min(input.scrollHeight, 130) + "px";
 });
-$("#new-chat").addEventListener("click", () => {
-  if (busy) return;
-  history = [];
-  messages.replaceChildren();
-  const welcome = document.createElement("div");
-  welcome.id = "welcome";
-  const h = document.createElement("h1");
-  h.textContent = "Hey, I’m Josh.";
-  const p = document.createElement("p");
-  p.textContent =
-    "What would you like to learn about GD Mission Systems–Canada?";
-  welcome.append(h, p);
-  messages.append(welcome);
-  $("#notice").textContent = "";
-  $("#josh-status").textContent = "Ready when you are.";
-  input.value = "";
-  input.style.height = "";
-  emote("nod");
-  input.focus();
+const conversations = initHistory({
+  messages,
+  input,
+  add,
+  isBusy: () => busy,
+  onRestore: (saved) => {
+    history = saved;
+    input.style.height = "";
+    $("#josh-status").textContent = saved.length
+      ? "Conversation restored."
+      : "Ready when you are.";
+  },
+  onError: (message) => {
+    $("#notice").textContent = message;
+  },
 });
 $("#coverage").addEventListener("click", async () => {
   try {

@@ -11,8 +11,17 @@
   <body>
     <main class="chat">
       <header>
-        <div><strong>Josh</strong><span>Defense Bot</span></div>
+        <div>
+          <strong>Josh</strong><span id="chat-title">New conversation</span>
+        </div>
         <div class="tools">
+          <button
+            id="history"
+            aria-label="Conversation history"
+            title="Previous conversations"
+          >
+            ☰
+          </button>
           <button
             id="motion"
             aria-pressed="true"
@@ -37,7 +46,7 @@
           role="img"
           aria-label="Josh smiling"
         >
-          <div class="sprite"></div>
+          <div class="gaze-pivot"><div class="sprite"></div></div>
         </div>
         <span id="josh-status">Ready when you are.</span>
       </div>
@@ -69,6 +78,19 @@
         </form>
         <small>AI can make mistakes. Check the sources.</small>
       </div>
+      <dialog id="history-dialog">
+        <button id="close-history" aria-label="Close history">×</button>
+        <h2>Your conversations</h2>
+        <p>
+          Saved on this browser only. Each conversation keeps its own memory. Up
+          to 50 conversations are kept; the oldest is removed when the limit is
+          reached.
+        </p>
+        <button id="start-chat" class="start-chat">
+          Start new conversation
+        </button>
+        <div id="chat-list"></div>
+      </dialog>
       <dialog id="coverage-dialog">
         <button id="close-dialog" aria-label="Close">×</button>
         <h2>About Josh</h2>
@@ -80,9 +102,10 @@
         <p>
           When live research is enabled, short queries derived from your
           messages are sent to public Google News RSS and GDELT news indexes.
-          Avoid entering sensitive information. Messages stay in this tab’s
-          memory and are sent to Cloudflare Workers AI when you ask Josh. Start
-          a new conversation or refresh to clear them.
+          Avoid entering sensitive information. Conversations are saved locally
+          in this browser and sent to Cloudflare Workers AI when you continue a
+          chat. Use Conversation history to reopen or delete a chat. Clearing
+          browser data removes saved conversations.
         </p>
       </dialog>
     </main>
