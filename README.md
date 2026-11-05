@@ -1,27 +1,25 @@
 # Josh Defense Bot
 
-A camouflage-inspired educational chat app featuring the supplied Josh mascot. Cloudflare Worker serves static assets and a conversational Workers AI backend. Chat, quiz and recap modes use conversation context and retrieved official-site evidence. Source links accompany responses. No API keys ship to the browser.
+A simple chat window with an expressive Josh companion. Cloudflare serves the interface and AI backend. The conversation planner resolves follow-ups and selects social, research or analysis behavior before answering. The character has eight visual expression frames plus nod/breathing motion, faster natural blinks, greeting waves, curious typing reactions, thinking gestures and concerned reactions.
 
-## Run
+## Run and verify
 
-Node 24+, `npm ci`, `npm run dev`. Workers AI needs Cloudflare authentication and remote inference. `npm run check`, `npm test`, `npm audit --audit-level=high`, `npx wrangler deploy --dry-run`, then `npm run deploy`. Account is configured in wrangler.jsonc. AI usage may incur Cloudflare charges.
+Node 24+, `npm ci`, `npm run dev`. Cloudflare authentication is needed for remote AI. Run `npm run check`, `npm test`, `npm audit --audit-level=high` and `npx wrangler deploy --dry-run` before `npm run deploy`. See `.github/workflows/checks.yml` for CI. Account is configured in wrangler.jsonc. AI calls and optional searches may incur charges.
 
-## Knowledge and limits
+## Knowledge and current research
 
-Exclusive factual source: https://gdmissionsystems.ca/. **This release has four manually summarized source records verified through the search index on November 5, 2026. It has NOT absorbed the whole website.** Direct requests were blocked by Azure WAF. Product directory pagination, news archives, PDFs, media and specifications remain unindexed. The coverage endpoint and UI disclose this. No claim of exhaustive expertise is warranted.
+The foundation is https://gdmissionsystems.ca/, supplemented by official GD parent-company financial reporting. This release contains **12 reviewed source summaries**, including customer concentration, product families, export contracts, undersea systems, Battle Lab and financial reporting. Historical figures retain reporting dates. They are not current-year estimates. Direct full-site crawling remains blocked by Azure WAF; exhaustive website/PDF ingestion has NOT been achieved. Never claim absolute expertise.
 
-`knowledge/pages.json` contains factual summaries and provenance. `knowledge/urls.json` is an initial manifest, not a complete sitemap. `npm run import` checks robots policy and downloads accessible HTML main text into ignored work files for review. It stops on inaccessible policies and does not bypass access controls. Expand the manifest from an authorized sitemap/export, extract PDFs separately, summarize and review evidence, then update pages.json, test retrieval and redeploy. Full-site ingestion and automatic refresh are future work; no scheduled job is currently configured. Retrieval is lexical and intentionally simple; a larger corpus should use chunked semantic retrieval.
+Optional on-demand Cloudflare Web Search performs up to two queries per researched response, prioritizing the Canadian site and then wider context. It requires `LIVE_RESEARCH=enabled` plus AI Gateway credits or a configured provider key. It is **currently disabled pending explicit user approval** for conversation-derived queries leaving the app. Provider failures and empty evidence are reported; the app must never manufacture live news or quotes. Search results are excerpts, not full-document verification. Retrieval timestamps are not publication dates. The local foundation uses weighted lexical retrieval, not a complete semantic index.
 
-## Privacy and protection
+Company-specific factual claims require evidence. Stable general education is allowed. Hypotheticals distinguish assumptions, causal analysis and uncertainty; current factual premises require live evidence. Defence-stock discussions are educational, not individualized investment advice. The parent corporation is distinguished from its Canadian businesses. Sales popularity and largest-customer rankings require an explicit metric and documented support.
 
-Chat exists only in tab memory and is sent to Cloudflare Workers AI for inference. This app does not persist chat transcripts. Cloudflare platform metadata may be logged; application errors log only error type. Same-origin POST checks, bounded messages, per-IP rate limits, plain-text rendering and restrictive asset headers protect the chat surface. Public access has no account system; rate limiting is not a global spending cap. Configure account budgets and access policy for larger launches.
+`knowledge/pages.json` records evidence provenance. `npm run import` checks source robots policy and downloads accessible HTML into ignored work files for manual review. It stops on inaccessible policies and does not bypass access controls. The URL manifest is incomplete. Full-site ingestion, autonomous refresh and PDF extraction remain future work.
 
-This is an independent learning tool, not an official General Dynamics service. Generated responses may be incorrect; verify cited sources. The user supplied the mascot artwork. GD trademarks and linked content remain with their owners.
+## Privacy and interaction
 
-## Repository layout
+Chat exists in tab memory; recent conversation is sent to Cloudflare Workers AI. If enabled, short context-derived search queries also go through Cloudflare Web Search to its search provider; avoid sensitive input. No app database stores conversations. Platform logs may retain metadata. Same-origin requests, bounded messages, rate limits, plain-text answer rendering and restrictive asset headers protect the surface. Public access has no account system or global spend cap.
 
-`public/` interface and mascot; `src/` Worker and retrieval; `knowledge/` evidence and URL manifest; `scripts/` import workflow; `tests/` retrieval checks; `.github/workflows/` audit CI. Wrangler configuration is the deployment source of truth.
+Animation respects reduced-motion preferences and can be disabled. Response text is progressively revealed after receipt, not streamed from the model. Expressions are selected from interpreted intent and tone; they do not mean the mascot has emotions or universal human understanding.
 
-## Animated chat interface
-
-The interface is a single chat window with a transparent four-expression Josh sprite sheet, built with the built-in image generator from the supplied reference. Idle blinks, subtle breathing and nods accompany response preparation and word-by-word presentation. Responses are revealed after receipt; network token streaming is not implemented. Thanks and acknowledgement cues trigger a thumbs-up; no sentiment classifier is used. Animation can be disabled and follows reduced-motion preferences. Knowledge coverage remains unchanged.
+Independent learning tool; not affiliated with General Dynamics. User-supplied and generated Josh artwork are project assets. Original GD trademarks and linked source content remain with their owners. Conversation-design references and artwork prompt are in knowledge/conversation-design.md.

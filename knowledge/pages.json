@@ -26,5 +26,61 @@
     "text": "The careers page describes engineering, technology, manufacturing and business opportunities, co-op opportunities and opportunities for Canadian Armed Forces veterans. It describes a Sherbrooke Centre of Excellence for remotely piloted aircraft systems technologies. Working arrangements depend on the role.",
     "verified": "2026-11-05",
     "method": "Search-index summary; direct crawl blocked"
+  },
+  {
+    "title": "GD Corporation customer concentration and market exposure",
+    "url": "https://www.gd.com/-/media/gd-corporate/pdf/gd_2024_ar_final.ashx",
+    "text": "The GD Corporation 2024 annual report states approximately 70% of revenue came from the U.S. government. This establishes the U.S. government as the dominant customer for the parent corporation in that reporting period. It does not establish a customer ranking for Mission Systems–Canada. Government defence spending affects financial performance. Continuing resolutions can delay new programmes and funding increases. This is historical 2024 reporting, not a live 2026 statistic.",
+    "verified": "2026-11-05",
+    "method": "Manually reviewed primary-source search-index summary; historical dates retained"
+  },
+  {
+    "title": "Canada customer and export contract example",
+    "url": "https://gdmissionsystems.ca/articles/2022/10/17/ccc-helps-gdms-canada-win-24-million-contract-with-portugal",
+    "text": "An October 17, 2022 release describes a $24 million contract supporting Portuguese Air Force P-3C maritime patrol aircraft modernization, with Canadian Commercial Corporation support. This is a documented customer example, not evidence of the largest customer or current backlog.",
+    "verified": "2026-11-05",
+    "method": "Manually reviewed primary-source search-index summary; historical dates retained"
+  },
+  {
+    "title": "Distributed acoustics and UYS-506",
+    "url": "https://gdmissionsystems.ca/articles/2023/05/22/general-dynamics-mission-systems-launches-distributed-acoustics-processing-suite",
+    "text": "A May 22, 2023 launch announcement describes distributed acoustics processing including the UYS-506 Sonobuoy Processor. The suite can be hosted on autonomous vehicles with data relay to other platforms and ground stations. It is a public product announcement, not evidence of sales rank.",
+    "verified": "2026-11-05",
+    "method": "Manually reviewed primary-source search-index summary; historical dates retained"
+  },
+  {
+    "title": "Sonobuoy processors and training",
+    "url": "https://gdmissionsystems.ca/undersea-warfare/sonobuoy-processing",
+    "text": "The sonobuoy processing page describes over 40 years of supplying allied forces. UYS-505 software supports automatic detection and tracking, integration with mission management systems, ground-station post-mission analysis and replay, and operator training. Capability descriptions are company claims; the page does not provide comparative sales data.",
+    "verified": "2026-11-05",
+    "method": "Manually reviewed primary-source search-index summary; historical dates retained"
+  },
+  {
+    "title": "Undersea portfolio",
+    "url": "https://gdmissionsystems.ca/undersea-warfare",
+    "text": "The undersea warfare portfolio describes hull-mounted sonar, towed-array sonar and sonobuoy processing. Its integrated sensor suite incorporates sonar, sonobuoys and intercept sensors for maritime missions. These are public capability categories, not a complete stock or availability list.",
+    "verified": "2026-11-05",
+    "method": "Manually reviewed primary-source search-index summary; historical dates retained"
+  },
+  {
+    "title": "Ottawa Battle Lab and Canadian Army collaboration",
+    "url": "https://gdmissionsystems.ca/about-us/battle-lab",
+    "text": "The Ottawa-headquarters Battle Lab brings engineers, industry partners and Canadian Army customers together for experimentation, integration and co-development of C5ISRT capabilities. It supports rapid evaluation of emerging technology. The Canadian Army is a documented partner/customer; no revenue-ranking data is given.",
+    "verified": "2026-11-05",
+    "method": "Manually reviewed primary-source search-index summary; historical dates retained"
+  },
+  {
+    "title": "Land modernization collaboration",
+    "url": "https://gdmissionsystems.ca/articles/2025/12/Canadian-Army-Today",
+    "text": "A December 15, 2025 article describes work with the Canadian Army to modernize Land C5ISRT through an Ottawa Battle Lab testing and evaluation environment. The article focuses on a resilient digital backbone and reducing development risk.",
+    "verified": "2026-11-05",
+    "method": "Manually reviewed primary-source search-index summary; historical dates retained"
+  },
+  {
+    "title": "GD Corporation 2025 financial reporting",
+    "url": "https://investorrelations.gd.com/news/press-release-details/2026/General-Dynamics-Reports-Fourth-Quarter-and-Full-Year-2025-Financial-Results/default.aspx",
+    "text": "The parent corporation reports $52.6 billion revenue for 2025 and more than 110,000 employees worldwide. The portfolio spans business aviation, ship construction and repair, land combat vehicles, weapons and munitions, and technology services. This is parent-company reporting, not Canadian division revenue.",
+    "verified": "2026-11-05",
+    "method": "Manually reviewed primary-source search-index summary; historical dates retained"
   }
 ]

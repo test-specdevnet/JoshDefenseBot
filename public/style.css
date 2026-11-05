@@ -361,3 +361,68 @@ h2 {
     padding-bottom: 10px;
   }
 }
+#josh[data-expression="thoughtful"] .sprite,
+#josh[data-expression="curious"] .sprite,
+#josh[data-expression="concerned"] .sprite,
+#josh[data-expression="wave"] .sprite {
+  background-image: url("/josh-reactions.png");
+}
+#josh[data-expression="thoughtful"] .sprite {
+  background-position: 0 0;
+}
+#josh[data-expression="curious"] .sprite {
+  background-position: 100% 0;
+}
+#josh[data-expression="concerned"] .sprite {
+  background-position: 0 100%;
+}
+#josh[data-expression="wave"] .sprite {
+  background-position: 100% 100%;
+}
+#josh[data-expression="curious"] {
+  animation: listen 1.3s ease-in-out;
+}
+#josh[data-expression="wave"] {
+  animation: greeting 1.4s ease-in-out;
+}
+#josh[data-expression="thoughtful"] {
+  animation: ponder 2s ease-in-out infinite;
+}
+@keyframes listen {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(-4deg) translateY(-2px);
+  }
+}
+@keyframes greeting {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  30%,
+  70% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+@keyframes ponder {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px) rotate(1deg);
+  }
+}
+.research-note {
+  display: block;
+  color: #a7b19f;
+  font-size: 10px;
+  margin-top: 10px;
+  line-height: 1.6;
+}

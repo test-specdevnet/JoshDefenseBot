@@ -5,15 +5,24 @@ const $ = (s) => document.querySelector(s),
   messages = $("#messages"),
   input = $("#message"),
   josh = $("#josh");
-let expressionTimer;
+let expressionTimer,
+  replyExpression = "smile",
+  lastInputEmote = 0;
+const labels = {
+  thumbs: "giving a thumbs up",
+  blink: "blinking",
+  nod: "nodding",
+  thoughtful: "thinking",
+  curious: "listening curiously",
+  concerned: "looking concerned",
+  wave: "waving",
+  smile: "smiling",
+};
 function emote(expression, duration = 1000) {
   clearTimeout(expressionTimer);
-  if (!animationEnabled) return;
+  if (!animationEnabled || document.hidden) return;
   josh.dataset.expression = expression;
-  josh.setAttribute(
-    "aria-label",
-    `Josh ${expression === "thumbs" ? "giving a thumbs up" : expression === "blink" ? "blinking" : expression === "nod" ? "nodding" : "smiling"}`,
-  );
+  josh.setAttribute("aria-label", `Josh ${labels[expression] || "listening"}`);
   expressionTimer = setTimeout(() => {
     josh.dataset.expression = "idle";
     josh.setAttribute("aria-label", "Josh smiling");
@@ -49,10 +58,18 @@ function scheduleBlink() {
         emote("blink", 170);
       scheduleBlink();
     },
-    3800 + Math.random() * 3000,
+    2100 + Math.random() * 2100,
   );
 }
 scheduleBlink();
+emote("wave", 1800);
+setInterval(() => {
+  if (!busy && !document.hidden && josh.dataset.expression === "idle")
+    emote(input.value ? "curious" : "nod", 1000);
+}, 6500);
+input.addEventListener("focus", () => {
+  if (!busy) emote("curious", 1300);
+});
 function scrollChat() {
   messages.scrollTop = messages.scrollHeight;
 }
@@ -75,7 +92,15 @@ async function add(role, content, sources = [], reveal = false) {
     article.setAttribute("aria-busy", "true");
     for (let i = 0; i < words.length; i += 3) {
       text.textContent += words.slice(i, i + 3).join("");
-      if (i % 36 === 0) emote(i % 72 === 0 ? "nod" : "smile", 850);
+      if (i % 18 === 0)
+        emote(
+          replyExpression === "concerned"
+            ? "concerned"
+            : i % 36 === 0
+              ? "nod"
+              : replyExpression,
+          650,
+        );
       scrollChat();
       await new Promise((r) => setTimeout(r, 38));
     }
@@ -98,7 +123,7 @@ async function add(role, content, sources = [], reveal = false) {
 }
 async function send(text) {
   if (busy || !text.trim()) return;
-  if (history.length >= 20) {
+  if (history.length >= 60) {
     $("#notice").textContent =
       "Start a new conversation using + to keep learning.";
     return;
@@ -113,29 +138,52 @@ async function send(text) {
   input.value = "";
   input.style.height = "";
   $("#notice").textContent = "";
-  $("#josh-status").textContent = "Checking my field notes…";
-  emote("nod", 1000);
-  const thinking = setInterval(() => emote("nod", 1000), 4200);
+  $("#josh-status").textContent = "Thinking it through…";
+  emote("thoughtful", 1500);
+  let beat = 0;
+  const thinking = setInterval(
+    () => emote(++beat % 2 ? "curious" : "thoughtful", 1400),
+    2200,
+  );
   try {
     const response = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: history, mode: "chat" }),
+      body: JSON.stringify({ messages: history.slice(-20), mode: "chat" }),
       signal: AbortSignal.timeout(60000),
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Unable to reach Josh.");
     clearInterval(thinking);
-    $("#josh-status").textContent = "Here’s what I found.";
+    replyExpression = [
+      "wave",
+      "smile",
+      "thumbs",
+      "thoughtful",
+      "curious",
+      "concerned",
+    ].includes(data.expression)
+      ? data.expression
+      : "smile";
+    $("#josh-status").textContent =
+      data.research?.status === "live"
+        ? "Checked current sources."
+        : "Here’s my take.";
     await add("assistant", data.answer, data.sources, true);
+    if (
+      data.research &&
+      !["not-needed", "live"].includes(data.research.status)
+    ) {
+      const note = document.createElement("small");
+      note.className = "research-note";
+      note.textContent =
+        data.research.status === "partial"
+          ? "Some live sources were unavailable."
+          : "Live research unavailable or returned no evidence; using reviewed sources and conditional analysis.";
+      messages.lastElementChild.append(note);
+    }
     history.push({ role: "assistant", content: data.answer });
-    // Acknowledgement gestures only for positive conversational cues, never for uncertain answers.
-    emote(
-      /\b(thanks|thank you|got it|understand)\b/i.test(text)
-        ? "thumbs"
-        : "smile",
-      1800,
-    );
+    emote(replyExpression, 1800);
     $("#josh-status").textContent = "Listening.";
   } catch (e) {
     history.pop();
@@ -166,6 +214,10 @@ input.addEventListener("keydown", (e) => {
   }
 });
 input.addEventListener("input", () => {
+  if (Date.now() - lastInputEmote > 2500) {
+    lastInputEmote = Date.now();
+    emote("curious", 900);
+  }
   input.style.height = "auto";
   input.style.height = Math.min(input.scrollHeight, 130) + "px";
 });

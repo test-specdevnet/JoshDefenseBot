@@ -11,6 +11,7 @@
     "run_worker_first": ["/api/*"],
   },
   "ai": { "binding": "AI" },
+  "vars": { "LIVE_RESEARCH": "disabled" },
   "ratelimits": [
     {
       "name": "CHAT_LIMIT",
