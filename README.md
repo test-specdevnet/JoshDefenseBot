@@ -21,3 +21,7 @@ This is an independent learning tool, not an official General Dynamics service. 
 ## Repository layout
 
 `public/` interface and mascot; `src/` Worker and retrieval; `knowledge/` evidence and URL manifest; `scripts/` import workflow; `tests/` retrieval checks; `.github/workflows/` audit CI. Wrangler configuration is the deployment source of truth.
+
+## Animated chat interface
+
+The interface is a single chat window with a transparent four-expression Josh sprite sheet, built with the built-in image generator from the supplied reference. Idle blinks, subtle breathing and nods accompany response preparation and word-by-word presentation. Responses are revealed after receipt; network token streaming is not implemented. Thanks and acknowledgement cues trigger a thumbs-up; no sentiment classifier is used. Animation can be disabled and follows reduced-motion preferences. Knowledge coverage remains unchanged.

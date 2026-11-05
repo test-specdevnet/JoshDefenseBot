@@ -4,128 +4,83 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="theme-color" content="#171c17" />
-    <meta
-      name="description"
-      content="Learn about General Dynamics Mission Systems–Canada with Josh, your source-grounded study companion."
-    />
-    <title>Josh Defense Bot — Your mission is knowledge.</title>
+    <title>Josh Defense Bot</title>
     <link rel="stylesheet" href="/style.css" />
     <script type="module" src="/app.js"></script>
   </head>
   <body>
-    <aside>
-      <a class="brand" href="/"
-        >J<span>▰</span>
-        <div>JOSH<small>DEFENSE BOT</small></div></a
-      ><button id="new-chat" class="new">＋ &nbsp; New conversation</button>
-      <p class="eyebrow">YOUR FIELD GUIDE</p>
-      <nav aria-label="Study mode">
-        <button class="active" data-mode="chat">
-          ◈ &nbsp; Ask Josh <span>01</span></button
-        ><button data-mode="quiz">
-          ◎ &nbsp; Test your knowledge <span>02</span></button
-        ><button data-mode="recap">≋ &nbsp; Quick recap <span>03</span></button>
-      </nav>
-      <div class="sidebar-bottom">
-        <div class="source-dot">OFFICIAL SOURCE</div>
-        <a href="https://gdmissionsystems.ca/" target="_blank" rel="noopener"
-          >GD Mission Systems–Canada ↗</a
-        ><button id="coverage">View knowledge coverage ↗</button
-        ><small
-          >Independent learning tool.<br />Not affiliated with General
-          Dynamics.</small
-        >
-      </div>
-    </aside>
-    <main>
+    <main class="chat">
       <header>
-        <div>
-          <span class="status"></span> LEARNING HQ <span class="slash">/</span>
-          <span id="mode-label">ASK JOSH</span>
-        </div>
-        <span class="badge">CANADA <b>✦</b></span>
-      </header>
-      <section id="welcome">
-        <div class="hero-copy">
-          <p class="eyebrow">YOUR MISSION IS KNOWLEDGE.</p>
-          <h1>Get briefed.<br />Stay curious.</h1>
-          <p class="intro">
-            Meet Josh. Your guide to the technology, people, and mission behind
-            Canada’s defence sector.
-          </p>
-          <div class="meet">
-            <span class="status"></span> Ready when you are.
-          </div>
-        </div>
-        <div class="portrait">
-          <img
-            src="/josh.png"
-            alt="Josh, a friendly illustrated guide wearing camouflage trousers and an AI backpack"
-          />
-          <div class="portrait-label">
-            <strong>JOSH</strong><span>YOUR STUDY COMPANION</span>
-          </div>
-        </div>
-      </section>
-      <section id="starters">
-        <div class="section-title">
-          <span>CHOOSE YOUR FIRST BRIEFING</span
-          ><span>↙ OR ASK ANYTHING BELOW</span>
-        </div>
-        <div class="prompts">
+        <div><strong>Josh</strong><span>Defense Bot</span></div>
+        <div class="tools">
           <button
-            data-prompt="Give me a beginner's introduction to General Dynamics Mission Systems–Canada."
+            id="motion"
+            aria-pressed="true"
+            title="Toggle character animation"
           >
-            <small>01 / THE BIG PICTURE</small
-            ><strong>Start with the essentials</strong
-            ><span>Meet GD Mission Systems–Canada. ↗</span></button
+            Animation on</button
+          ><button id="coverage" aria-label="About Josh and source coverage">
+            ⓘ</button
           ><button
-            data-prompt="What products are listed in the public product directory?"
+            id="new-chat"
+            aria-label="New conversation"
+            title="New conversation"
           >
-            <small>02 / TECHNOLOGY</small><strong>Explore the equipment</strong
-            ><span>Displays, networks, and mission systems. ↗</span></button
-          ><button
-            data-prompt="Quiz me on the Canadian organization, one question at a time."
-          >
-            <small>03 / KNOWLEDGE CHECK</small
-            ><strong>Put yourself to the test</strong
-            ><span>A little recall goes a long way. ↗</span>
+            ＋
           </button>
         </div>
-      </section>
+      </header>
+      <div class="companion" aria-label="Josh, your animated study companion">
+        <div
+          id="josh"
+          data-expression="idle"
+          role="img"
+          aria-label="Josh smiling"
+        >
+          <div class="sprite"></div>
+        </div>
+        <span id="josh-status">Ready when you are.</span>
+      </div>
       <section
         id="messages"
         aria-label="Conversation"
+        role="log"
         aria-live="polite"
-      ></section>
+      >
+        <div id="welcome">
+          <h1>Hey, I’m Josh.</h1>
+          <p>
+            What would you like to learn about<br />GD Mission Systems–Canada?
+          </p>
+        </div>
+      </section>
       <div class="composer-area">
-        <div id="notice" role="status"></div>
+        <p id="notice" role="status"></p>
         <form id="chat-form">
           <label class="sr-only" for="message">Message Josh</label
           ><textarea
             id="message"
             rows="1"
             maxlength="3000"
-            placeholder="Ask Josh about GD Mission Systems–Canada…"
+            placeholder="Message Josh…"
             required
           ></textarea
           ><button id="send" aria-label="Send message">↑</button>
         </form>
-        <div class="composer-foot">
-          <span>PUBLIC INFORMATION. PRACTICAL LEARNING.</span
-          ><span>AI can make mistakes. Check the sources.</span>
-        </div>
+        <small>AI can make mistakes. Check the sources.</small>
       </div>
       <dialog id="coverage-dialog">
         <button id="close-dialog" aria-label="Close">×</button>
-        <p class="eyebrow">KNOWLEDGE COVERAGE</p>
-        <h2>A clear view of what Josh knows.</h2>
+        <h2>About Josh</h2>
+        <p>
+          Independent learning companion. Not affiliated with General Dynamics.
+        </p>
         <p id="coverage-note"></p>
         <ul id="source-list"></ul>
         <p>
-          Conversations stay in this tab’s memory and are sent to Cloudflare
-          Workers AI when you ask Josh. Refresh or start a new conversation to
-          clear them.
+          Messages stay in this tab’s memory and are sent to Cloudflare Workers
+          AI when you ask Josh. Start a new conversation or refresh to clear
+          them.
         </p>
       </dialog>
     </main>
