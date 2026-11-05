@@ -68,3 +68,17 @@ test("analysis instructions separate scenarios and scope", () => {
   assert.match(s, /guaranteed forecasts/);
   assert.match(s, /unavailable/);
 });
+
+test("unfunded gateway is reported as payment required", async () => {
+  const r = await research(
+    { websearch: async () => new Response("", { status: 402 }) } as never,
+    {
+      intent: "research",
+      query: "GD",
+      current: true,
+      expression: "thoughtful",
+    },
+  );
+  assert.equal(r.status, "payment-required");
+  assert.equal(r.sources.length, 0);
+});

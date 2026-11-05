@@ -132,7 +132,16 @@ export async function research(ai: Ai, plan: Plan) {
         query: query.slice(0, 1024),
         limit: 5,
       });
-      if (!response.ok) throw new Error(`Search HTTP ${response.status}`);
+      if (!response.ok) {
+        console.warn(
+          JSON.stringify({
+            event: "websearch_http_failure",
+            status: response.status,
+          }),
+        );
+        await response.body?.cancel();
+        throw new Error("Search HTTP " + response.status);
+      }
       return normalizeResults(await response.json());
     }),
   );
@@ -141,6 +150,12 @@ export async function research(ai: Ai, plan: Plan) {
   );
   const seen = new Set<string>();
   const unique = sources.filter((s) => !seen.has(s.url) && !!seen.add(s.url));
+  const paymentRequired = results.some(
+    (r) =>
+      r.status === "rejected" &&
+      r.reason instanceof Error &&
+      r.reason.message === "Search HTTP 402",
+  );
   return {
     sources: unique.slice(0, 8),
     status: results.every((r) => r.status === "fulfilled")
@@ -149,7 +164,9 @@ export async function research(ai: Ai, plan: Plan) {
         : "no-results"
       : unique.length
         ? "partial"
-        : "unavailable",
+        : paymentRequired
+          ? "payment-required"
+          : "unavailable",
   };
 }
 export function systemPrompt(plan: Plan, sources: Evidence[], status: string) {

@@ -177,9 +177,11 @@ async function send(text) {
       const note = document.createElement("small");
       note.className = "research-note";
       note.textContent =
-        data.research.status === "partial"
-          ? "Some live sources were unavailable."
-          : "Live research unavailable or returned no evidence; using reviewed sources and conditional analysis.";
+        data.research.status === "payment-required"
+          ? "Live research needs Cloudflare AI Gateway credits. Using reviewed sources and conditional analysis."
+          : data.research.status === "partial"
+            ? "Some live sources were unavailable."
+            : "Live research unavailable or returned no evidence; using reviewed sources and conditional analysis.";
       messages.lastElementChild.append(note);
     }
     history.push({ role: "assistant", content: data.answer });
