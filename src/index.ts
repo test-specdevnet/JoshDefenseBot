@@ -89,14 +89,17 @@ export default {
       const plan = await planConversation(env.AI, history);
       const live =
         String(env.LIVE_RESEARCH) === "enabled"
-          ? await research(env.AI, plan)
+          ? await research(plan)
           : {
               sources: [],
               status: plan.intent === "social" ? "not-needed" : "disabled",
             };
       const local = plan.intent === "social" ? [] : retrieve(plan.query);
       const seen = new Set<string>();
-      const sources = [...live.sources, ...local]
+      const sources = [
+        ...(plan.current ? live.sources : local),
+        ...(plan.current ? local : live.sources),
+      ]
         .filter((s) => !seen.has(s.url) && !!seen.add(s.url))
         .slice(0, 12);
       const system = systemPrompt(plan, sources, live.status);
@@ -124,7 +127,11 @@ export default {
       return json({
         answer: result.response,
         expression: plan.expression,
-        research: { status: live.status, checkedAt: new Date().toISOString() },
+        research: {
+          status: live.status,
+          provider: "provider" in live ? live.provider : "none",
+          checkedAt: new Date().toISOString(),
+        },
         sources: sources.map(({ title, url, verified }) => ({
           title,
           url,
