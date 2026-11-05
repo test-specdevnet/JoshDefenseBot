@@ -1,0 +1,30 @@
+[
+  {
+    "title": "About the Canadian organization",
+    "url": "https://gdmissionsystems.ca/about-us",
+    "text": "General Dynamics Mission Systems–Canada was established in 1948. It supplies hardware, software and integrated mission systems. The official About Us page describes three business groups: Land C5ISRT, Airborne Mission Systems, and Underwater Warfare. It describes support for Canadian forces and over 20 allied forces and first responders, and a supply chain including over 250 Canadian suppliers.",
+    "verified": "2026-11-05",
+    "method": "Search-index summary; direct crawl blocked"
+  },
+  {
+    "title": "Public product directory",
+    "url": "https://gdmissionsystems.ca/products/view-all-products-programs-and-services",
+    "text": "The public product directory lists smart displays and vehicle displays including SD9112H, SD8012, SD8010, MD9012, SD8110, SD8112 and GD6010. It also lists the Video Management Unit (VMU), PE9110 and PE9112 processing computers. MESHnet entries include TCS-300 and TCS-50 crew stations; TMR-304, TMR-314 and TMR-308 tactical mobile routers; Unified Communications Application, Vehicle Application, Video Display Application, Communications Selector Box and Power Distribution Unit. This is a partial visible directory, not a complete inventory; availability and detailed specifications are not verified.",
+    "verified": "2026-11-05",
+    "method": "Search-index summary; directory pagination not ingested"
+  },
+  {
+    "title": "Canadian locations",
+    "url": "https://gdmissionsystems.ca/contact-us",
+    "text": "The official contact page lists headquarters in Ottawa, Ontario, and offices in Dartmouth (Halifax), Nova Scotia; Calgary, Alberta; and Sherbrooke, Quebec.",
+    "verified": "2026-11-05",
+    "method": "Search-index summary; direct crawl blocked"
+  },
+  {
+    "title": "Careers and learning",
+    "url": "https://gdmissionsystems.ca/careers",
+    "text": "The careers page describes engineering, technology, manufacturing and business opportunities, co-op opportunities and opportunities for Canadian Armed Forces veterans. It describes a Sherbrooke Centre of Excellence for remotely piloted aircraft systems technologies. Working arrangements depend on the role.",
+    "verified": "2026-11-05",
+    "method": "Search-index summary; direct crawl blocked"
+  }
+]

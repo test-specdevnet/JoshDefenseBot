@@ -1,0 +1,35 @@
+{
+  "name": "josh-defense-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "check": "wrangler types && tsc --noEmit",
+    "import": "node scripts/import.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/test-specdevnet/JoshDefenseBot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/test-specdevnet/JoshDefenseBot/issues"
+  },
+  "homepage": "https://github.com/test-specdevnet/JoshDefenseBot#readme",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261104.1",
+    "@types/node": "^26.6.6",
+    "prettier": "^3.9.10",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.158.0"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0"
+  }
+}
